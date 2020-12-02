@@ -11,8 +11,8 @@ def part1(ls, targ):
 
 def part2(ls, targ):
     for i,x in enumerate(ls):
-        for j,y in enumerate(ls[i:]):
-            for z in ls[i+y+1:]:
+        for j,y in enumerate(ls[i+1:]):
+            for z in ls[i+y+2:]:
                 if x + y + z == targ:
                     return(x*y*z)
 
