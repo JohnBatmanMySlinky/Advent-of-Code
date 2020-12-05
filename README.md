@@ -5,3 +5,4 @@
 2. nice
 3. ok
 4. accidentlly skipped the last line of the file. that wasted an hour of my life.
+5. part b was so straightforward it was confusing
