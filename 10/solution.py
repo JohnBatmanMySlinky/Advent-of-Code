@@ -43,5 +43,5 @@ for x in range(len(dat)-1):
                 tmp += answer[x-z]
             answer[x] = tmp
         else:
-                answer[x] = answer[x-1]
+            answer[x] = answer[x-1]
 print('part2: ' + str(answer[-1]))
