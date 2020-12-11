@@ -10,4 +10,5 @@
 7. first ever tree traversal. this was painful. solutions aren't too bad but they FOREVER. part 2 was a day behind.
 8. nice. part 2 was a day behind :(
 9. very project euler - esque. back on track!
-10. part 2 was hard. my solution was so so ugly. the elegant DP solutions I found online were soooooooo much better, jee11. having done sudoku, i gained valuable grid skills that made this ezpz.
+10. part 2 was hard. my solution was so so ugly. the elegant DP solutions I found online were soooooooo much better, jee
+11. having done sudoku, i gained valuable grid skills that made this ezpz.
