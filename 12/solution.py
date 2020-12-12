@@ -47,5 +47,4 @@ for arg in dat:
         x += arg[1]
     if arg[0] == 'W':
         x -= arg[1]
-    print(arg, (X,Y), x, y)
 print(abs(x)+abs(y))
