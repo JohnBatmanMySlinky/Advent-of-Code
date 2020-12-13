@@ -33,4 +33,4 @@ def chinese_remainder_theorum(m, a):
         tot += a_i * b_i * modular_inverse(b_i, m_i)
     return(tot % M)
 
-print('' + str(chinese_remainder_theorum(bus, rem)))
+print('part2: ' + str(chinese_remainder_theorum(bus, rem)))
