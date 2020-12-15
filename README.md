@@ -14,4 +14,5 @@
 11. having done sudoku, i gained valuable grid skills that made this ezpz.
 12. once I figured the cloclwise / counter clock wise rotation matrix it wasn't so bad
 13. today we learn about chinese remainder theorum! hopefully useful for a project euler eventually.......
-14. pretty brute force-y but no real hang ups which is nice. 
+14. pretty brute force-y but no real hang ups which is nice.
+15. HA! part 2 punished me for being lazy on part 1....
