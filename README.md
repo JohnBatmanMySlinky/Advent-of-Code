@@ -17,3 +17,4 @@
 14. pretty brute force-y but no real hang ups which is nice.
 15. HA! part 2 punished me for being lazy on part 1....
 16. my solution is soooooo ugly but too busy to clean up
+17. day late cuz work is busy :(. solution isn't clever but is very clean. am happy. 
