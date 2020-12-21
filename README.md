@@ -19,3 +19,4 @@
 16. my solution is soooooo ugly but too busy to clean up
 17. day late cuz work is busy :(. solution isn't clever but is very clean. am happy. 
 18. shunting algorithm & RPN. the tediousness of debugging made this really hard. also so many inserts & pops hurts my brain.
+19. i am suffering. i quit for meow. I'll be back in a few days to pick up.

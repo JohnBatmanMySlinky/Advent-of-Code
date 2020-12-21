@@ -43,11 +43,28 @@ def make_pattern(rule):
                     # thank god
                     assert 0>0
         return(pattern)
+ 
+    
+# part2
+# after some sketching the infinite loop has two forms which are able to be accounted for manually
+# 0: 8 11
+# 8 --> (42), (42 42), (42, 42, 42), ....
+# 11 --> (42, 31), (42, 42, 31, 31), (42, 42, 42, 31, 31, 31), ....
+fourtytwo = make_pattern(42)
+thirtyone = make_pattern(31)
 
-# part 1
-# acceptable_patterns = make_pattern(0)
-# answer = 0
-# for each in messages:
-#     if each in acceptable_patterns:
-#         answer += 1
-# print('part1: ' + str(answer))
+print(fourtytwo)
+print(thirtyone)
+assert len(fourtytwo) == len(thirtyone)
+
+answer2 = 0
+for eight in range(1,5):
+    for eleven in range(1,5):
+        print('42'*eight + '42'*eleven + '31'*eleven)
+        tmp = []
+        for x in range(len(fourtytwo)):
+            tmp.append(fourtytwo[x]*eight + fourtytwo[x]*eleven + thirtyone[x]*eleven)
+        for each in messages:
+            if each in tmp:
+                answer2 += 1
+print('part2: ' + str(answer2))
