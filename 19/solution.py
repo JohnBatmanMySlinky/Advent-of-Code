@@ -45,9 +45,9 @@ def make_pattern(rule):
         return(pattern)
 
 # part 1
-# acceptable_patterns = make_pattern(0)
-# answer = 0
-# for each in messages:
-#     if each in acceptable_patterns:
-#         answer += 1
-# print('part1: ' + str(answer))
+acceptable_patterns = make_pattern(0)
+answer = 0
+for each in messages:
+    if each in acceptable_patterns:
+        answer += 1
+print('part1: ' + str(answer))
