@@ -52,19 +52,33 @@ def make_pattern(rule):
 # 11 --> (42, 31), (42, 42, 31, 31), (42, 42, 42, 31, 31, 31), ....
 fourtytwo = make_pattern(42)
 thirtyone = make_pattern(31)
-
-print(fourtytwo)
-print(thirtyone)
 assert len(fourtytwo) == len(thirtyone)
 
+# for each message we can back into a combination of 42's and 31's and check if it fits the above pattern
+# first build out valid combos
+valid_combos = []
+for x in range(1,50):
+    for y in range(1,50):
+        valid_combos.append('F'*x + 'F'*y + 'T'*y)
+
+# then build combo for each message and check validity
 answer2 = 0
-for eight in range(1,5):
-    for eleven in range(1,5):
-        print('42'*eight + '42'*eleven + '31'*eleven)
-        tmp = []
-        for x in range(len(fourtytwo)):
-            tmp.append(fourtytwo[x]*eight + fourtytwo[x]*eleven + thirtyone[x]*eleven)
-        for each in messages:
-            if each in tmp:
-                answer2 += 1
+for each in messages:
+    # build combo of F & T's
+    chunk_len = len(fourtytwo[0])
+    message_len = len(each)
+    combo = ''
+    if message_len % chunk_len != 0:
+        continue
+    else:
+        for x in range(chunk_len, message_len+chunk_len, chunk_len):
+            if each[x-chunk_len:x] in fourtytwo:
+                combo += 'F'
+            if each[x-chunk_len:x] in thirtyone:
+                combo += 'T'
+
+    #check combo is valid
+    if combo in valid_combos:
+        answer2 += 1
+
 print('part2: ' + str(answer2))
