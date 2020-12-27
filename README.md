@@ -21,3 +21,4 @@
 18. shunting algorithm & RPN. the tediousness of debugging made this really hard. also so many inserts & pops hurts my brain.
 19. this took me a few days. was awful. tapping out lol. I'll try to finish these in due time. I was on pace till #19 lol
 20. I was keeping up until part2 here. took me almost a week. p2 wasn't that hard just a lot of crap to do lol.
+21. tht was easy.
