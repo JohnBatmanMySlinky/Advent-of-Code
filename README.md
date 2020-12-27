@@ -23,3 +23,4 @@
 20. I was keeping up until part2 here. took me almost a week. p2 wasn't that hard just a lot of crap to do lol.
 21. tht was easy.
 22. p1 ez. doing p1s for now.
+23. I spent about an hour learning that circles go in a circle....
