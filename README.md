@@ -24,3 +24,4 @@
 21. tht was easy.
 22. p1 ez. doing p1s for now.
 23. I spent about an hour learning that circles go in a circle....
+24. Love finding something like hexagonal coordinates. Something I have spent 0 time thinking about but also something some people have spent ALOT of time thinking about.
