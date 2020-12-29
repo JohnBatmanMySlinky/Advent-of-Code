@@ -1,6 +1,6 @@
 # My Advent of Code Solutions
 
-## Done in python. Maybe some in R if I'm bored. 
+Done in python. Maybe some in R if I'm bored. 
 
 ## Recap
 ### *2020*
