@@ -32,5 +32,7 @@ def handshake(card, door, cloop, dloop, m):
 
 cloop = solve(card, 1, subj, m)
 dloop = solve(door, 1, subj, m)
+print(cloop)
+print(dloop)
 print('part1: ' + str(handshake(card, door, cloop, dloop, m)))
 
