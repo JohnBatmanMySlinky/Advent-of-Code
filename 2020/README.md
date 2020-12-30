@@ -23,6 +23,6 @@
 20. I was keeping up until part2 here. took me almost a week. p2 wasn't that hard just a lot of crap to do lol.
 21. tht was easy.
 22. p1 ez. doing p1s for now.
-23. I spent about an hour learning that circles go in a circle....
+23. I spent about an hour learning that circles go in a circle.... p2: amazing how tweaking data structures can take this from totally intractable to a couple of seconds.... also baby's first linked list.
 24. Love finding something like hexagonal coordinates. Something I have spent 0 time thinking about but also something some people have spent ALOT of time thinking about.
 25. these p1's really arent that bad.
