@@ -93,4 +93,5 @@ def INTCODE(orig, INPUT, pos):
             return None, None, None, 99
 
 
-print(INTCODE(orig, [1], 0)[1])
+print('part1: {}'.format(INTCODE(orig, [1], 0)[1]))
+print('part2: {}'.format(INTCODE(orig, [2], 0)[1]))
