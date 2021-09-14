@@ -13,42 +13,76 @@ with open(r"input.txt","r") as f:
 
 from collections import defaultdict
 
-print(formula)
-
-def calc_ore(ingred, N):
+def calc_ore(N):
     need = defaultdict(int, {'FUEL': N})
     xs = defaultdict(int)
-    ore = 0
 
-    # run till you get primary ingredients
+    # run till you only have ore left
     while list(need.keys()) != ['ORE']:
-        curr = [x for x in need.keys() if x != 'ORE'][0]
-
+        curr = [x for x in need.keys() if x != 'ORE'][0]     
+        
         # taking from xs
-        if xs[curr] - need[curr] > 0:
-             need[curr] -= xs[curr]
-             del xs[curr]
-        elif xs[curr] == need[curr]:
-            need[curr] = 0
+        if xs[curr] > 0:
+            need[curr] -= xs[curr]
             del xs[curr]
+        
+            if need[curr] == 0:
+                del need[curr]
 
-        mult = (need[curr] - 0.5) // ingred[curr][0] + 1
+        # how many to make
+        mult = (need[curr] - 0.5) // formula[curr][0] + 1
 
         # adding in xs
-        xs[curr] += mult * ingred[curr][0] - need[curr]
+        xs[curr] += mult * formula[curr][0] - need[curr]
 
-        print(need)
-        print(xs)
-        print(curr)
-        input()
-
-        for each in list(ingred[curr][1].keys()):
-            need[each] += mult * ingred[curr][1][each]
+        # adding sub ingredients
+        for each in list(formula[curr][1].keys()):
+            need[each] += mult * formula[curr][1][each]
 
         del need[curr]
 
-    return need['ORE']
+    return int(need['ORE'])
 
 
-print(calc_ore(formula, 1))
+print("part1: {}".format(calc_ore(1)))
+
+def search(X, fxn, high, low):
+    midpoint = (high + low) // 2
+    FUEL = fxn(midpoint)
+    kill_N = 5
+    kill = [0]*kill_N
+    
+    while FUEL != X:
+#         print(X)        
+#         print(midpoint)
+#         print(FUEL)
+#         print(kill)
+#         input()
+        
+        if FUEL < X:
+            low = midpoint
+            midpoint = (high+midpoint) // 2
+            
+        else:
+            high = midpoint
+            midpoint = (low+midpoint) // 2
+    
+        FUEL = fxn(midpoint)
+        
+        kill.append(FUEL)
+        kill.pop(0)      
+        if len(kill) >= kill_N:
+            if all([kill[x] == kill[x+1] for x in range(kill_N-1)]):
+                break
+            
+    
+    return midpoint
+
+
+print("part2: {}".format(search(
+    1000000000000, 
+    calc_ore, 
+    1000000000000*1000,
+    0,
+)))
 
