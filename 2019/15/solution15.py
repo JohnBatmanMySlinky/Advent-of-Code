@@ -107,61 +107,52 @@ def update_board(board, pos, b, b_out):
 
     return board
 
-def generate_next(pos):
-    a = list(pos).copy()
-    a[0] += 1
-    b = list(pos).copy()
-    b[0] -= 1
-    c = list(pos).copy()
-    c[1] += 1
-    d = list(pos).copy()
-    d[1] -= 1
-    return [tuple(a), tuple(b), tuple(c), tuple(d)]
+def generate_next(pos, move):
+    if move == 1:
+        out = (pos[0] + 1, pos[1])
+    elif move == 2:
+        out = (pos[0] - 1, pos[1])
+    elif move == 3:
+        out = (pos[0], pos[1] + 1)
+    elif move == 4:    
+        out = (pos[0], pos[1] - 1)
+    return out
 
 
 a = orig.copy()
 b = 1
 c, d, e = 0, 0, 0
-N = 45
-board = [[8 for x in range(N)] for y in range(N)]
-pos = [N//2, N//2]
-board[pos[0]][pos[1]] = 1
-i = 1
-
+pos = (0,0)
+queue = [(pos, a, c, d)]
 path = set()
-path.add(tuple(pos))
+path.add(pos)
 
 # find oxygen
-while e != 99:
-    a, b_out, c, d, e = INTCODE(a, [b], c, d)
+while queue:
+    pos, a, c, d = queue.pop(0)    
+    for move in [1,2,3,4]:
+        board, tile, c_out, d_out, e = INTCODE(a, [move], c, d)
+        if tile == 0:
+            pass
+        elif tile == 1:
+            if generate_next(pos, move) not in path:
+                queue.append((
+                    generate_next(pos, move),
+                    board, c, d
+                ))
+                path.add(generate_next(pos,move))
+        elif tile == 2:
+            oxygen = pos
+            print('yeehaw found oxygen at {}'.format(oxygen))
+        else: 
+            break
 
-    board = update_board(board, pos, b, b_out)
-
-    if b_out != 0:
-        pos = update_pos(pos, b)
-        if tuple(pos) not in path:
-            path.add(tuple(pos))
-
-    if b_out == 2:
-        print('YEEEEEHAW found oxygen')
-        end = tuple(pos)
-        # print(path)
-        # break
-
-    if i % 10_000 == 0:
-        print("search for oxygen, iteration {:,}. {:,} tiles explored".format(i, len(path)))
-
-    next_moves = [x for x in range(1,5)]
-    if b_out == 0:
-        b = random.sample([x for x in next_moves if x is not b], 1)[0]
-    else:
-        b = random.sample(next_moves,1)[0]
-    i += 1
+print('finished filling in full grid. explored {} tiles'.format(len(path)))
 
 
+# part 1 BFS
 # figure out how far away it is
-end = tuple(pos)
-pos = (N//2, N//2)
+pos = (0,0)
 visited = []
 queue = []
 
@@ -172,12 +163,15 @@ def BFS(visited, queue, graph, node, end):
     while queue:
         s, d = queue.pop(0)
         if s == end:
-            print('part 1: {}'.format(d-1))
-        for neighbour in generate_next(s):
+            return d
+        for neighbour in [generate_next(s,y) for y in range(1,5)]:
             if neighbour in path:
                 if neighbour not in visited:
                     visited.append(neighbour)
                     queue.append((neighbour, d+1))
 
 # finish part 1
-BFS(visited, queue, path, end, pos)
+part1 = BFS(visited, queue, path, oxygen, pos)
+print("part1: {}".format(part1))
+
+
