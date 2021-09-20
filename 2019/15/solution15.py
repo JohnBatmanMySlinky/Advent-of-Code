@@ -5,6 +5,7 @@ with open(r"input.txt","r") as f:
 
 import operator
 import random
+from collections import defaultdict
 
 def return_params(raw, pos, mode, rb):
     # position
@@ -106,6 +107,17 @@ def update_board(board, pos, b, b_out):
 
     return board
 
+def generate_next(pos):
+    a = list(pos).copy()
+    a[0] += 1
+    b = list(pos).copy()
+    b[0] -= 1
+    c = list(pos).copy()
+    c[1] += 1
+    d = list(pos).copy()
+    d[1] -= 1
+    return [tuple(a), tuple(b), tuple(c), tuple(d)]
+
 
 a = orig.copy()
 b = 1
@@ -116,30 +128,56 @@ pos = [N//2, N//2]
 board[pos[0]][pos[1]] = 1
 i = 1
 
+path = set()
+path.add(tuple(pos))
+
+# find oxygen
 while e != 99:
     a, b_out, c, d, e = INTCODE(a, [b], c, d)
 
     board = update_board(board, pos, b, b_out)
 
-    if b_out == 2:
-        print('YEEEEEHAW')
-        print(board)
-        break
-
     if b_out != 0:
         pos = update_pos(pos, b)
+        if tuple(pos) not in path:
+            path.add(tuple(pos))
 
-    # print("current position: ({}, {})".format(pos[0], pos[1]))
-    # print("direction input:   {}".format(b))
-    # print("output tile:       {}".format(b_out))
-    # print("iteration:         {:,}".format(i))
-    if i % 1000 == 0:
-        print(i)
-        print(board)
-        print("==============================================================")
-    # b = int(input())
+    if b_out == 2:
+        print('YEEEEEHAW found oxygen')
+        end = tuple(pos)
+        # print(path)
+        # break
+
+    if i % 10_000 == 0:
+        print("search for oxygen, iteration {:,}. {:,} tiles explored".format(i, len(path)))
+
+    next_moves = [x for x in range(1,5)]
     if b_out == 0:
-        b = random.sample([x for x in range(1,5) if x is not b], 1)[0]
+        b = random.sample([x for x in next_moves if x is not b], 1)[0]
     else:
-        b = random.sample([1,2,3,4],1)[0]
+        b = random.sample(next_moves,1)[0]
     i += 1
+
+
+# figure out how far away it is
+end = tuple(pos)
+pos = (N//2, N//2)
+visited = []
+queue = []
+
+def BFS(visited, queue, graph, node, end):
+    visited.append(node)
+    queue.append((node,1))
+
+    while queue:
+        s, d = queue.pop(0)
+        if s == end:
+            print('part 1: {}'.format(d-1))
+        for neighbour in generate_next(s):
+            if neighbour in path:
+                if neighbour not in visited:
+                    visited.append(neighbour)
+                    queue.append((neighbour, d+1))
+
+# finish part 1
+BFS(visited, queue, path, end, pos)
