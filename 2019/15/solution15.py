@@ -174,4 +174,24 @@ def BFS(visited, queue, graph, node, end):
 part1 = BFS(visited, queue, path, oxygen, pos)
 print("part1: {}".format(part1))
 
+def BFS2(visited, queue, graph, node):
+    visited.append(node)
+    queue.append((node,1))
+
+    while queue:
+        s, d = queue.pop(0)
+        for neighbour in [generate_next(s,y) for y in range(1,5)]:
+            if neighbour in path:
+                if neighbour not in visited:
+                    visited.append(neighbour)
+                    queue.append((neighbour, d+1))
+                    
+    return d
+
+visited = []
+queue = []
+print("part2: {}".format(BFS2(visited, queue, path, oxygen)))
+
+
+
 
