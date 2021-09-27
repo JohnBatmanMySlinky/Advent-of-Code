@@ -124,6 +124,7 @@ def generate_next(pos, move):
     return out
 
 
+
 a = orig.copy()
 b_out = 0
 c, d, e = 0, 0, 0
@@ -145,6 +146,9 @@ while e != 99:
     else:
         line.append(ascii_map[b_out])
 
+
+
+
 # count intersections
 score = 0
 for y in range(1,len(board)-2):
@@ -158,3 +162,6 @@ for y in range(1,len(board)-2):
             if check == 4:
                 score += x*y
 print('part1: {}'.format(score))
+print(board)
+
+
