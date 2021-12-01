@@ -14,4 +14,3 @@ def part2(dat):
     return counter
 
 print(part2(dat))
-
