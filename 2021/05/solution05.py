@@ -25,20 +25,20 @@ def part1(dat):
                 coords[(x,start[1])] += 1
         # DIAGONAL
         else:
-            # start from coord with min x
-            if start[0] < end[0]:
-                a = start; b = end
+            step = [0,0]
+            if start[0] > end[0]:
+                step[0] = -1
             else:
-                b = start; a = end
+                step[0] = 1
 
-            # sloping which way
-            if a[1] < b[1]:
-                step = 1
+            if start[1] > end[1]:
+                step[1] = -1
             else:
-                step = -1
+                step[1] = 1
 
-            for x in range(0,b[0]-a[0]+1):
-                coords[(a[0]+x, a[1]+x*step)] += 1
+            for offset in range(0,abs(start[0]-end[0])+1):
+                coords[(start[0]+step[0]*offset, start[1]+step[1]*offset)] += 1
+
 
     answer = 0
     for v in coords.values():
