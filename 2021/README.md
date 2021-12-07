@@ -7,3 +7,4 @@
 4) diagonals, how do they work?
 5) overcomplicated. logic for diagonals would have worked fine for horizontal and vertical.
 6) had to think on part 2
+7) lucky guess on range to find the optimum
