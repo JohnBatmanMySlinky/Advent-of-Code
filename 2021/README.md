@@ -8,3 +8,5 @@
 5) overcomplicated. logic for diagonals would have worked fine for horizontal and vertical.
 6) had to think on part 2
 7) lucky guess on range to find the optimum
+8) part 2 was fun to solve on paper but haneous to code
+9) good ol fashion bfs on a board!
