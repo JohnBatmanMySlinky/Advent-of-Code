@@ -10,3 +10,4 @@
 7) lucky guess on range to find the optimum
 8) part 2 was fun to solve on paper but haneous to code
 9) good ol fashion bfs on a board!
+10) lotta popping here
