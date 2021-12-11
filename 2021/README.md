@@ -11,3 +11,4 @@
 8) part 2 was fun to solve on paper but haneous to code
 9) good ol fashion bfs on a board!
 10) lotta popping here
+11) took a second to realize it had to be recursive. also screwed up p2 as I forgot part1 changes my input to part2 and I start 100 cycles in. LOL
