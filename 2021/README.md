@@ -14,3 +14,4 @@
 11) took a second to realize it had to be recursive. also screwed up p2 as I forgot part1 changes my input to part2 and I start 100 cycles in. LOL
 12) struggling for so long on 2019 d18 made this not so bad
 13) list indexing hurts my brain sometimes
+14) thanks lantern fish. also that double counting on p2 screwed with me for a while
