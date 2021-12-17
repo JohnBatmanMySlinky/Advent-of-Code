@@ -15,3 +15,6 @@
 12) struggling for so long on 2019 d18 made this not so bad
 13) list indexing hurts my brain sometimes
 14) thanks lantern fish. also that double counting on p2 screwed with me for a while
+15) why was part 2 so hard. 
+16) leading zeroes ruined my day
+17) brute force gang
