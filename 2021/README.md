@@ -18,3 +18,4 @@
 15) why was part 2 so hard. 
 16) leading zeroes ruined my day
 17) brute force gang
+18) this was fucking awful

@@ -1,5 +1,7 @@
+from itertools import permutations
+
 with open('input.txt') as f:
-    dat = [eval(x.strip()) for x in f.readlines()]
+    raw = [eval(x.strip()) for x in f.readlines()]
 
 def parse(number, d):
     for each in number:
@@ -44,7 +46,6 @@ def part1(dat):
         code = [(x,y+1) for x,y in code]
 
         while True:
-            print(code, sum([x+y for x,y in code]))
             code, result = explode(code)
             if result == True: continue
 
@@ -56,10 +57,8 @@ def part1(dat):
     return code
 
 def magnitude(code):
-    print(code)
     maxdepth = max([y for x,y in code])
-    print("max depth: {}".format(maxdepth))
-    for d in reversed(range(1,maxdepth+1)):
+    for d in reversed(range(0,maxdepth+1)):
         for i, (x,y) in enumerate(code):
             if y == d:
                 code[i] = (x*3+code[i+1][0]*2, y-1)
@@ -67,7 +66,18 @@ def magnitude(code):
         code = [(x,y) for x,y in code if x != -1]
     return code[0][0]
 
+def part2(dat):
+    p = list(permutations(range(len(dat)),2))
 
-# print(part1(dat))
+    winner = 0
+    for (j,k) in p:
+        new = [x for i,x in enumerate(dat) if i in [j,k]]
+        code = part1(new)
+        # if j == 0 and k == 9: print(j,k,out, code)    
+        out = magnitude(code)
+        if out > winner: 
+            winner = out
+    return winner
 
-print(magnitude(list(parse(dat,0))))
+print("part 1: {}".format(magnitude(part1(raw))))
+print("part 2: {}".format(part2(raw)))
