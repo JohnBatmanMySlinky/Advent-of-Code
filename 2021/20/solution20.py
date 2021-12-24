@@ -13,19 +13,16 @@ with open('input.txt') as f:
     decipher = ''.join(decipher)
 
 
-def pad(to_pad, N):
+def pad(to_pad, N, p):
     for _ in range(N):
-        to_pad.insert(0, '.'*len(to_pad[0]))
-        to_pad.append('.'*len(to_pad[0]))
-        to_pad = ['.' + x + '.' for x in to_pad]
+        to_pad.insert(0, p*len(to_pad[0]))
+        to_pad.append(p*len(to_pad[0]))
+        to_pad = [p + x + p for x in to_pad]
     return to_pad
 
 
-def update(image, decipher):
+def update(image, decipher, i):
     mapper = {'#': '1', '.': '0'}
-
-    image = pad(image,1)
-
     new_image = []
     for y in range(len(image)):
         new_row = ''
@@ -35,7 +32,11 @@ def update(image, decipher):
                 if 0 <= x+j <= len(image)-1 and 0 <= y+k <= len(image)-1:
                     binary += mapper[image[y+k][x+j]]
                 else:
-                    binary += '0'
+                    if decipher[0]=='#' and (i+1)%2==0:
+                        infinity='1'
+                    else:
+                        infinity='0'
+                    binary += infinity
             position = int(binary,2)
             new_row += decipher[position]
         new_image.append(new_row)
@@ -43,10 +44,11 @@ def update(image, decipher):
     return new_image
 
 def part1(image, decipher, N):
-    print(image)
-    for _ in range(N):
-        image = update(image, decipher)
-        print(image)
+
+    image = pad(image, 60, '.')
+
+    for i in range(N):
+        image = update(image, decipher, i)
 
     score = 0
     for x in image:
@@ -54,6 +56,9 @@ def part1(image, decipher, N):
             if y == '#':
                 score += 1
     return score
+p1 = image.copy()
+p2 = image.copy()
 
-print(part1(image, decipher, 2))
+print(part1(p1, decipher, 2))
+print(part1(p2, decipher, 50))
         
