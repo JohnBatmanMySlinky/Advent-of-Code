@@ -1,6 +1,13 @@
 # My Advent of Code Solutions
 
-Done in python. Maybe some in R if I'm bored. 
+# 2018
+- Used Julia, started late 2022.
 
-**2020**
-* Made it through day 19 mostly on track. Shunting yard algorithm hurt. The rotating boards part2 wasn't hard but took a long time. Chinese remainder theorum was hard but presumably will be helpful for Project Euler. The last couple p2's slowed me down a fair bit too. 
+# 2019
+- Used Python, started mid 2021.
+
+# 2020
+- Used Python, done live in 2020. 100% done. 
+
+# 2021 
+- Used Python, done live in 2021. Got all but a few live. 
