@@ -71,7 +71,8 @@ function most_minutes_asleep(d::Dict)
     return findmax(sleep_log)
 end
 
-function find_most_slept_minute(d::Dict, chosen_guard::Int64)
+function find_most_slept_minute(D::Dict, chosen_guard::Int64)
+    d = deepcopy(D)
     minute_log = Dict{Int64, Int64}()
     for (id, guard) in keys(d)
         if guard == chosen_guard
@@ -92,8 +93,43 @@ function find_most_slept_minute(d::Dict, chosen_guard::Int64)
     return findmax(minute_log)[2]
 end
 
+function find_most_slept_minute2(d::Dict)
+    minute_log = Dict{Int64, Dict{Int64, Int64}}()
+    for (id, guard) in keys(d)
+        if !(guard ∈ keys(minute_log))
+            minute_log[guard] = Dict{Int64, Int64}()
+        end
+        timesheet = d[(id, guard)]
+        while length(timesheet) > 0
+            left = popfirst!(timesheet)
+            right = popfirst!(timesheet)
+            for i in left:(right-1)
+                if i ∈ keys(minute_log[guard])
+                    minute_log[guard][i] += 1
+                else
+                    minute_log[guard][i] = 1
+                end
+            end
+        end
+    end
+
+    winner_minutes = 0
+    winner_instance = 0
+    winner_guard = 0
+    for guard in keys(minute_log)
+        a, b = findmax(minute_log[guard])
+        if a > winner_instance
+            winner_instance = a
+            winner_minutes = b
+            winner_guard = guard        
+        end
+    end
+    return winner_guard * winner_minutes
+end
+
 sorted_lines = SORT(lines)
 universe = create_universe(sorted_lines)
 minutes_slept, chosen_guard  = most_minutes_asleep(universe)
 most_slept_minute = find_most_slept_minute(universe, chosen_guard)
 print("part 1: " * string(chosen_guard * most_slept_minute) * "\n")
+print("part 2: " * string(find_most_slept_minute2(universe)))
