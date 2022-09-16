@@ -93,4 +93,30 @@ function p1(lines::Vector{String})
     return findmax(answer)
 end
 
-print(p1(data))
+function p2(lines::Vector{String}, cap::Int64)
+    board = Tuple{Int64,Int64}[]
+    for (i, line) in enumerate(lines)
+        x, y = make_nice(line)
+        push!(board, (x,y))
+    end
+
+    seen = []
+    min_x, min_y, max_x, max_y = bounding_box(board)
+
+    acceptable = 0
+    for x in min_x:max_x
+        for y in min_y:max_y
+            cumulative = 0
+            for (a,b) in board
+                cumulative += manhattan(x,y,a,b)
+            end
+            if cumulative < cap
+                acceptable += 1
+            end
+        end
+    end
+    return acceptable
+end
+
+print("part 1: " * string(p1(data)[1]) * "\n")
+print("part 2: " * string(p2(data, 10000)))
