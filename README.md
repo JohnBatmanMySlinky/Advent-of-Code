@@ -11,3 +11,6 @@
 
 # 2021 
 - Used Python, done live in 2021. Got all but a few live. 
+
+# 2022
+- I'd like to do this year in rust... but I also wanna go fast...
