@@ -19,7 +19,7 @@ def create_tree(data):
             else:
                 assert False
         elif dat[0].isnumeric():
-            for i in range(len(key)):
+            for i in range(len(key)): # this fucking line >:(
                 tree[tuple(key[:i+1])] += int(dat[0])
         elif dat[0] == "dir":
             pass
