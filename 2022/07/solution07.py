@@ -1,46 +1,49 @@
 from collections import defaultdict
 
 with open("input.txt") as f:
-    data = [x.strip() for x in f.readlines()]
+    data = [x.strip().split() for x in f.readlines()]
 
-def pop(s):
-    return "||" + "||".join(s.split("||")[1:-1])
-
-def create(data):
-    tree = dict()
+def create_tree(data):
+    tree = defaultdict(int)
     i = 0
-    key = ""
-    while i-1 < len(data):
-        if data[i] == "$ ls":
-            i += 1
-            while data[i][0] != "$":
-                a,b = data[i].split(' ')
-                if a.isnumeric():
-                    tree[key+"||"+b] = a
-                i += 1
-                if i == len(data):
-                    return tree
-        elif data[i][:4] == "$ cd":
-            a, b, c = data[i].split(" ")
-            if c == "..":
-                key = pop(key)
-            elif c == "/":
-                key = "/"
+    key = []
+    for dat in data:
+        if dat[0] == "$":
+            if dat[1] == "cd":
+                if dat[2] == "..":
+                    key.pop(-1)
+                else:
+                    key.append(dat[2])
+            elif dat[1] == "ls":
+                pass
             else:
-                key += "||" + c
-            i += 1
-
+                assert False
+        elif dat[0].isnumeric():
+            for i in range(len(key)):
+                tree[tuple(key[:i+1])] += int(dat[0])
+        elif dat[0] == "dir":
+            pass
+        else:
+            assert False
+    return tree
+        
 def p1(data):
-    tree = create(data)
-    folder_set = defaultdict(int)
-    for k, v in tree.items():
-        for kk in k.split("||")[1:-1]:
-            folder_set[kk] += int(v)
+    tree = create_tree(data)
     winner = 0
-    for k,v in folder_set.items():
+    for k,v in tree.items():
         if v <= 100_000:
             winner += v
     return winner
 
+def p2(data):
+    tree = create_tree(data)
+
+    system = 70_000_000
+    needed = 30_000_000
+    update =  -1 * (system - tree[('/',)] - needed)
+    winner = min([v for k,v in tree.items() if v > update])
+    return winner
+
 
 print(f"part 1: {p1(data)}")
+print(f"part 2: {p2(data)}")
