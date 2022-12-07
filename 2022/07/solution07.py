@@ -21,9 +21,11 @@ def create(data):
                 if i == len(data):
                     return tree
         elif data[i][:4] == "$ cd":
-            a, b, c = data[i].split()
+            a, b, c = data[i].split(" ")
             if c == "..":
                 key = pop(key)
+            elif c == "/":
+                key = "/"
             else:
                 key += "||" + c
             i += 1
