@@ -34,29 +34,32 @@ math = {
 def p12(data, rounds, B):
     log = defaultdict(int)
     instructions = parse(data)
+
+    K = 1
+    for each in instructions:
+        K *= each["divisible"]
+
     for r in range(rounds):
         for i in range(len(instructions)):
             for item in instructions[i]["items"]:
                 log[i] += 1
                 if instructions[i]["operation_num"] == "old":
-                    new = math[instructions[i]["operation"]](item, item) // 3
+                    new = math[instructions[i]["operation"]](item, item) // B
                 else:
                     new = math[instructions[i]["operation"]](item, int(instructions[i]["operation_num"])) // B
 
+                # (a mod kn) mod n ≡ a mod n for all integer k
+                # lmao @ natively trying that...
+                # those old * old get big fast...
+                new %= K
+
                 if new % instructions[i]["divisible"] == 0:
                     instructions[instructions[i]["true"]]["items"].append(new)
-                    # print(f"{i} --> {new} --> {instructions[i]['true']}")
                 else:
                     instructions[instructions[i]["false"]]["items"].append(new)
-                    # print(f"{i} --> {new} --> {instructions[i]['false']}")
 
             instructions[i]["items"] = []
 
-        if r % 100 == 0:
-            print(f"  iteration: {r}")
-
-        # for i in range(len(instructions)):
-            # print(f"{r}: {i}: {instructions[i]['items']}")
     a, b = sorted(log.values())[-2:]
     return a*b
 
