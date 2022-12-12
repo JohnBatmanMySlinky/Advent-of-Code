@@ -7,9 +7,12 @@ def neighbors(data, p, path):
     x,y = p
     n = []
     for i in [1,-1]:
+        # bounds check
         if (x+i < len(data[0]))&(x+i >= 0):
+            # z --> E won't pass height check⌈
             if (data[y][x+i] == "E")&(data[y][x]=="z"):
                 n.append((x+i,y))
+            # height check
             if ord(data[y][x+i]) - ord(data[y][x]) <= 1:
                 if (x+i,y) not in path:
                     n.append((x+i,y))
@@ -23,12 +26,14 @@ def neighbors(data, p, path):
     return n
 
 def p1(data):
+    # find start
     for y in range(len(data)):
         for x in range(len(data[0])):
             if data[y][x] == "S":
                 start = (x,y)
     data[start[1]][start[0]] = "a"
 
+    # find end
     for y in range(len(data)):
         for x in range(len(data[0])):
             if data[y][x] == "E":
@@ -47,13 +52,6 @@ def p1(data):
                 log[n[1]][n[0]] = log[curr[1]][curr[0]] + 1
             q.append(n)
             visited.add(n)
-            
-            # print(q, visited)
-            # for l in log:
-                # print(l)
-            #     print(" ".join([str(x) for x in l]))
-            # input()
-
 
     return log[finish[1]][finish[0]]
 
