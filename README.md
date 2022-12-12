@@ -13,4 +13,4 @@
 - Used Python, done live in 2021. Got all but a few live. 
 
 # 2022
-- I'd like to do this year in rust... but I also wanna go fast...
+- Are my better leaderboard positions (slightly) better because I got smarter or I am now EU based and the timing works out better?
