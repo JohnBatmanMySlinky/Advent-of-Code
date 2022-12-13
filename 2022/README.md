@@ -11,3 +11,4 @@
 10. reading comprehension test today...
 11. Really liked this one. Previous AOC helped me on p2 :)
 12. Brain was NOT working this morning. Really messy & hacky solution. My p1 doesn't work on the test case but gets the right answer??? You can't tell me commenting out random lines of code until it works isn't valid. 
+13. absolutely hideous. total kludgefest. 
