@@ -48,6 +48,29 @@ def p1(data):
     return sum(winners)
 
 
+def p2(data):
+    A = 1
+    B = 1
+    for x,y in data:
+        z = [x,y]
+        for zz in z:
+            deep = compare(zz, [[2]])
+            flat = flatten([deep])
+            for f in flat:
+                if f == -1:
+                    break
+                elif f == 1:
+                    A += 1
+        for zz in z:
+            deep = compare(zz, [[6]])
+            flat = flatten([deep])
+            for f in flat:
+                if f == -1:
+                    break
+                elif f == 1:
+                    B += 1
+    return A*(B+1)
 
 
 print(f"part 1: {p1(data)}")
+print(f"part 2: {p2(data)}")
