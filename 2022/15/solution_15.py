@@ -39,5 +39,36 @@ def p1(data,y):
         #     print(f"{i/len(range(minx-3_000_000,maxx+3_000_000)):,.2%}")
         #     print(f"{winner:,}")
     return winner
-      
-print(f"part 1: {p1(data, 2_000_000)}")
+
+def p2(data):
+    # need to find place where four radii+1 intersect then check it aint contained by anything
+    # also needing parallel lines
+    sidesa = []
+    sidesb = []
+    for sx, sy, bx, by in data:
+        r = distance([bx,by], [sx, sy])
+        sidesa.append(sy-sx-r-1)
+        sidesa.append(sy-sx+r+1)
+        sidesb.append(sy+sx-r-1)
+        sidesb.append(sy+sx+r+1)
+
+    # parallels only
+    sidesa = [a for a in sidesa if sidesa.count(a)==2]
+    sidesb = [b for b in sidesb if sidesb.count(b)==2]
+
+    for aa in sidesa:
+        for bb in sidesb:
+            x = (bb-aa)//2
+            y = (bb+aa)//2
+            if (x in range(0,4_000_001))&(y in range(0, 4_000_001)):
+                winner = True
+                for sx, sy, bx, by in data:
+                    d1 = distance([x, y], [sx, sy])
+                    d2 = distance([sx, sy], [bx, by])
+                    if d1 <= d2:
+                        winner = False
+                if winner:
+                    return 4_000_000*x+y
+     
+# print(f"part 1: {p1(data, 2_000_000)}")
+print(f"part 2: {p2(data)}")
