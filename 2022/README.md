@@ -12,3 +12,6 @@
 11. Really liked this one. Previous AOC helped me on p2 :)
 12. Brain was NOT working this morning. Really messy & hacky solution. My p1 doesn't work on the test case but gets the right answer??? You can't tell me commenting out random lines of code until it works isn't valid. 
 13. absolutely hideous. total kludgefest. 
+14. love a board problem. i must have been mutating somethig because i needed two files. too lazy to fix though.
+15. I guessed how to do p2 correctly but brain was too tired to execute and had to peak at solution :(
+16. If my hacky heuristic didn't work I would have rage quit. pleased with myself though.
