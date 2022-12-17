@@ -120,18 +120,20 @@ def p1(gas_stream, rocks):
         # print(r)
         cave, rock_dict = spawn_rocks(cave, rock_dict, r%5)
         falling = True
-        print(cave, rock_dict)
-        input()
-        print()
+        # print(cave, rock_dict)
+        # input()
+        # print()
         while falling:
             gas = gas_stream[i]
+            # really should have one function here for push and fall and pass in tuples of directions to be moved
+            # too late
             cave, rock_dict = push_rock(cave, rock_dict, gas)
-            print(gas)
-            print(cave,rock_dict)
-            input()
+            # print(gas)
+            # print(cave,rock_dict)
+            # input()
             cave, rock_dict, falling = fall_rock(cave, rock_dict)
-            print(cave, rock_dict)
-            input()
+            # print(cave, rock_dict)
+            # input()
             i += 1    
     return len(cave) - min(z[1] for z in rock_dict["resting"])
 
