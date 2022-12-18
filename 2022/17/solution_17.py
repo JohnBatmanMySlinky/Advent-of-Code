@@ -137,5 +137,61 @@ def p1(gas_stream, rocks):
             i += 1    
     return len(cave) - min(z[1] for z in rock_dict["resting"])
 
+def find_pattern(log):
+    print("looking 4 a pattern")
+    window = 60
+    for x in range(len(log)):
+        for y in range(x+1, len(log)):
+            a = [z[:2] for z in log[x:(x+window)]]
+            b = [z[:2] for z in log[y:(y+window)]]
+            # print(a,b)
+            # input()
+            if a == b:
+                return x,y
+
+def p2(gas_stream, rocks):
+    cave = make_cave(7,15_000)
+    rock_dict = {"falling": set(), "resting": set()}
+    i = 0
+    log = []
+    for r in range(rocks):
+        # if (r % 1000 == 0) & (r > 0):
+            # print(r)
+        cave, rock_dict = spawn_rocks(cave, rock_dict, r%5)
+        falling = True
+        gaslog = ""
+        while falling:
+            gas = gas_stream[i]
+            gaslog += gas
+            cave, rock_dict = push_rock(cave, rock_dict, gas)
+            cave, rock_dict, falling = fall_rock(cave, rock_dict)
+            i += 1    
+
+        log.append([r%5, gaslog, len(cave) - min(z[1] for z in rock_dict["resting"]), r])
+        # print([x[:2] for x in log])
+        # input()
+
+    cycle_base, cycle_length = find_pattern(log)
+    cycle_length -= cycle_base
+    print(f"cycle base: {cycle_base:,}, cycle length: {cycle_length}")
+
+    base_height = log[cycle_base][2]
+    cycle_height = log[cycle_length][2]
+    print(f"base height: {base_height:,}, cycle height: {cycle_height}")
+
+    for i in range(6):
+        print(log[cycle_base+cycle_length* i])
+        print(base_height + cycle_height * i - i)
+        print()
+
+    AH = 1_000_000_000_000
+
+    cycles = (AH - cycle_base)//cycle_length
+    answer = base_height + cycle_height * cycles - cycles
+    cycles_left = AH - cycles * cycle_length + cycle_base
+    answer += log[cycle_base+cycle_length+cycles_left][2]-log[cycle_base+cycle_length][2] - base_height
+    return answer
+
 # print(f"part 1: {p1(data)}")
-print(f"{p1(data*100, 2022)}")
+print(f"part1: {p1(data*100, 2_022)}")
+print(f"part2: {p2(data*100, 10_000)}")
