@@ -16,3 +16,4 @@
 15. I guessed how to do p2 correctly but brain was too tired to execute and had to peak at solution :(
 16. If my hacky heuristic didn't work I would have rage quit. pleased with myself though.
 17. not fun.
+18. love me some grid stuff
