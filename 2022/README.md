@@ -15,3 +15,4 @@
 14. love a board problem. i must have been mutating somethig because i needed two files. too lazy to fix though.
 15. I guessed how to do p2 correctly but brain was too tired to execute and had to peak at solution :(
 16. If my hacky heuristic didn't work I would have rage quit. pleased with myself though.
+17. not fun.
