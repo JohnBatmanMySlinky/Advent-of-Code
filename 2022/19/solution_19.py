@@ -93,6 +93,13 @@ def p1(UNIVERSE, costs):
             # less_shitty_universe = [(I,R) for I,R in universe if R["ore"]<5]
             # universe = less_shitty_universe[:]
 
+            # only keep a set of universes dummy
+            less_shitty_universe = []
+            for I,R in universe:
+                if (I,R) not in less_shitty_universe:
+                    less_shitty_universe.append((I,R))
+            universe = less_shitty_universe[:]
+
         results[cost[0][0]] = max([I['geode'] for I,R in universe])
         print(results)
     return sum([k*v for k,v in results.items()])
