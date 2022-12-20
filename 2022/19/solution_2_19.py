@@ -38,13 +38,13 @@ def build(ingredients, robots, costs):
 
         # OPTIMIZATION: dont build more than 6 ore robots
         # build ore
-        if (ingredient[0] >= costs[0][0])&(robots[i][0]<=6):
+        if (ingredient[0] >= costs[0][0])&(robots[i][0]<=14):
             new_robots.append([i,1,0,0,0])
             new_ingredients.append([-costs[0][0],0,0,0])
 
         # OPTIMIZATION: dont build more than 6 clay robots
         # build clay
-        if (ingredient[0] >= costs[1][0])&(robots[i][1]<=6):
+        if (ingredient[0] >= costs[1][0])&(robots[i][1]<=14):
             new_robots.append([i,0,1,0,0])
             new_ingredients.append([-costs[1][0],0,0,0])
 
@@ -72,7 +72,7 @@ def p1(ROBOTS, INGREDIENTS, costs, minutes):
             robots = new_robots[:]
 
             # if you have too much ore, PRUNE
-            tmp = list(map(list, zip(*[(I,R) for I,R in zip(ingredients, robots) if I[0]<10])))
+            tmp = list(map(list, zip(*[(I,R) for I,R in zip(ingredients, robots) if I[0]<16])))
             ingredients = tmp[0]
             robots = tmp[1]
 
@@ -86,4 +86,5 @@ def p1(ROBOTS, INGREDIENTS, costs, minutes):
         print(f"done with blueprint: {c+1}")
         results[c+1] = max(z[3] for z in ingredients)
     return sum(k*v for k,v in results.items())
-print(f"part 1: {p1(robots, ingredients, costs, 24)}")
+# print(f"part 1: {p1(robots, ingredients, costs, 24)}")
+print(f"part 1: {p1(robots, ingredients, costs, 32)}")
