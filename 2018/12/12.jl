@@ -13,8 +13,9 @@ end
 
 function project(input_state::String, T::Int64)
     original_length = length(input_state)
+    pad = "....."
     for i in 1:T
-        input_state = "..." * input_state * "..."
+        input_state = pad * input_state * pad
         new_state = String["." for x in 1:length(input_state)]
         for i in 4:(length(new_state)-3)
             pot = input_state[i-2:i+2]
@@ -29,8 +30,8 @@ function project(input_state::String, T::Int64)
     
     score = 0
     for (idx, val) in enumerate(split(input_state, ""))
-        if val == "#"
-            score += idx - 3 * T - 1
+        if val ∈ ["#", '#']
+            score += idx - length(pad) * T - 1
         end
     end
     return score
