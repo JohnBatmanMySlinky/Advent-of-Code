@@ -14,3 +14,6 @@
 
 # 2022
 - Are my better leaderboard positions (slightly) better because I got smarter or I am now EU based and the timing works out better?
+
+# 2023
+- Given my amount of free time, it is irresponsible for me to continue. However, I shall try...
