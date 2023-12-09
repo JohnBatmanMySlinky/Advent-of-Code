@@ -45,43 +45,7 @@ def p1(seeds, maps):
             lowest = v[-1]
     return lowest
 
-def p2():
-    seeds, maps = parse()
-    seedranges = [range(x,x+y) for x,y in zip(seeds[::2], seeds[1::2])]
-
-    upper_bound = 0
-    for seed in seeds[::2]:
-        answer = p1([seed], maps)
-        if (answer > upper_bound) and any([answer in x for x in seedranges]):
-            upper_bound = answer
-
-    # we can use the even number seeds to get an upper bound
-    # then solve in reverse? 500M ok so that's rough but doable?
-    
-    winner = upper_bound
-    for seed in range(0,500_000_000):
-        seedlog = [seed]
-        for chunk in reversed(maps):
-            found = False
-            curr = seedlog[-1]
-            for dest, inp, r in chunk:
-                if curr-dest+inp in range(inp, inp+r):
-                    seedlog.append(curr-dest+inp)
-                    found = True
-                if found:
-                    break
-            if found == False:
-                seedlog.append(curr)
-        if any([seedlog[-1] in seedrange for seedrange in seedranges]):
-            if seedlog[-1] < winner:
-                winner = seedlog[-1]
-    return winner
-
-
-
 
 seeds, maps = parse()
 a1 = p1(seeds, maps)
 print(f"Part 1: {a1}")
-a2 = p2()
-print(f"part 2: {a2}")
