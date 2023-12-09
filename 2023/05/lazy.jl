@@ -52,4 +52,6 @@ function p2()
     return winner
 end
 
+# my back up plan was re-writing this thing as a giant ass piece wise function...
+
 print("$(p2())")
