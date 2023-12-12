@@ -56,14 +56,77 @@ def traverse(board):
                         seen.add((x+xo, y+yo))
                         # print(distance)
                         # input()
-    print(distance)
     winner = findmax(distance)
-    return winner
+    return winner, distance
 
 def p1():
     data = parse()
-    newboard = traverse(data)
-    return newboard
+    maxdistance, _ = traverse(data)
+    return maxdistance
+
+def floodfill(board):
+    Y = len(board)
+    X = len(board[0])
+
+    # get set of tiles that  are NOT pipe tiles
+    non_pipes = set()
+    for x in range(X):
+        for y in range(Y):
+            if board[y][x] == ".":
+                non_pipes.add((x,y))
+
+    # the fill
+    floods = []
+    seen = set()
+    while non_pipes:
+        # pick a non-pipe to start with and flood fill. 
+        curr = non_pipes.pop()
+        seen.add(curr)
+        que = [curr]
+        flood = [curr]
+        poisonpill = True
+        while que:
+            x,y = que.pop(0)
+            for xo, yo in [(1,0), (-1,0), (0,1), (0,-1)]:
+                xx = x+xo
+                yy = y+yo
+                # print(f"\t: working with {xx}, {yy}")
+                if (xx < 0) | (xx == X) | (yy < 0) | (yy == Y):
+                    # out of bounds. Stop filling.
+                    que = []
+                    poisonpill = True
+                    break
+                elif (board[yy][xx] != "."):
+                    #if we hit a pipe, do nothing
+                    pass
+                elif ((xx,yy) in seen): 
+                    # if we visit a seen, do nothing
+                    pass
+                elif board[yy][xx] == ".":
+                    poisonpill = False
+                    que.append((xx, yy))
+                    flood.append((xx,yy))
+                    seen.add((xx,yy))
+                else:
+                    # i think 
+                    assert False
+        if not poisonpill:
+            floods.append(flood)
+    return floods
+
+def p2():
+    data = parse()
+    _, pipes = traverse(data)
+    floods = floodfill(pipes)
+    score = 0
+    for flood in floods:
+        score += len(flood)
+    return score
+
+
+
 
 a1 = p1()
 print(f"Part 1: {a1}")
+a2 = p2()
+print(f"Part 2: {a2}")
