@@ -28,7 +28,7 @@ def traverse(board):
     Y = len(board)
     X = len(board[0])
 
-    distance = copy.deepcopy(board)
+    distance = copy.copy(board)
 
     x, y = findS(board)
     distance[y][x] = 0
@@ -64,59 +64,74 @@ def p1():
     maxdistance, _ = traverse(data)
     return maxdistance
 
+
 def floodfill(board):
     Y = len(board)
     X = len(board[0])
 
     # get set of tiles that  are NOT pipe tiles
-    non_pipes = set()
+    non_pipes = []
     for x in range(X):
         for y in range(Y):
             if board[y][x] == ".":
-                non_pipes.add((x,y))
+                non_pipes.append((x,y))
 
-    # the fill
+    # Fill all floods
     floods = []
     seen = set()
     while non_pipes:
-        # pick a non-pipe to start with and flood fill. 
-        curr = non_pipes.pop()
+        curr = non_pipes.pop(0)
+        if curr in seen:
+            continue
         seen.add(curr)
         que = [curr]
         flood = [curr]
-        poisonpill = True
         while que:
             x,y = que.pop(0)
+            seen.add((x,y))
             for xo, yo in [(1,0), (-1,0), (0,1), (0,-1)]:
                 xx = x+xo
                 yy = y+yo
-                # print(f"\t: working with {xx}, {yy}")
                 if (xx < 0) | (xx == X) | (yy < 0) | (yy == Y):
-                    # out of bounds. Stop filling.
-                    que = []
-                    poisonpill = True
-                    break
+                    continue
                 elif (board[yy][xx] != "."):
-                    #if we hit a pipe, do nothing
-                    pass
+                    continue
                 elif ((xx,yy) in seen): 
-                    # if we visit a seen, do nothing
-                    pass
+                    continue
                 elif board[yy][xx] == ".":
-                    poisonpill = False
                     que.append((xx, yy))
-                    flood.append((xx,yy))
-                    seen.add((xx,yy))
+                    flood.append((xx, yy))
+                    seen.add((xx, yy))
                 else:
-                    # i think 
                     assert False
-        if not poisonpill:
-            floods.append(flood)
-    return floods
+        floods.append(flood)
+
+    # now all floods are built, prune the edge cases
+    prunedfloods = []
+    for flood in floods:
+        kill = False
+        for x,y in flood:
+            if (x == 0) | (x == X-1) | (y == 0) | (y == Y-1):
+                kill = True
+        if not kill:
+            prunedfloods.append(flood)
+    return prunedfloods
 
 def p2():
     data = parse()
+    # this mutates data
     _, pipes = traverse(data)
+
+    # use pipes to mask non-pipe pieces
+    data = parse()
+    X = len(data[0])
+    Y = len(data)
+    for x in range(X):
+        for y in range(Y):
+            if pipes[y][x] == ".":
+                data[y][x] = "."
+    print(data)
+
     floods = floodfill(pipes)
     score = 0
     for flood in floods:
