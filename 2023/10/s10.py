@@ -28,9 +28,10 @@ def traverse(board):
     Y = len(board)
     X = len(board[0])
 
-    distance = copy.copy(board)
+    distance = copy.deepcopy(board)
 
     x, y = findS(board)
+    board[y][x] = "|"
     distance[y][x] = 0
     que = [(x,y)]
     moves = [(1,0), (-1,0), (0,1), (0,-1)]
@@ -42,6 +43,56 @@ def traverse(board):
         ( 0, -1): ("|", "F", "7"),
         ( 0,  1): ("|", "L", "J"),
     }
+    valid = {
+        "-": [
+            ((-1, 0), "-"),
+            ((-1, 0), "L"),
+            ((-1, 0), "F"),
+            (( 1, 0), "-"),
+            (( 1, 0), "J"),
+            (( 1, 0), "7"),
+        ],
+        "|": [
+            ((0,  1), "|"),
+            ((0,  1), "J"),
+            ((0,  1), "L"),
+            ((0, -1), "|"),
+            ((0, -1), "F"),
+            ((0, -1), "7"),
+        ],
+        "J": [
+            ((-1,  0), "-"),
+            ((-1,  0), "L"),
+            ((-1,  0), "F"),
+            (( 0, -1), "|"),
+            (( 0, -1), "F"),
+            (( 0, -1), "7"),
+        ],
+        "7": [
+            ((-1, 0), "-"),
+            ((-1, 0), "L"),
+            ((-1, 0), "F"),
+            (( 0, 1), "|"),
+            (( 0, 1), "L"),
+            (( 0, 1), "J"),
+        ],
+        "L": [
+            ((0, -1), "|"),
+            ((0, -1), "7"),
+            ((0, -1), "F"),
+            ((1,  0), "-"),
+            ((1,  0), "J"),
+            ((1,  0), "7"),
+        ],
+        "F": [
+            ((0, 1), "|"),
+            ((0, 1), "L"),
+            ((0, 1), "J"),
+            ((1, 0), "-"),
+            ((1, 0), "7"),
+            ((1, 0), "J"),
+        ]
+    }
 
     while que:
         x,y = que.pop(0)
@@ -49,8 +100,9 @@ def traverse(board):
             xo, yo = move
             if (x+xo, y+yo) not in seen:
                 if (y + yo >= 0) & (y + yo < Y) & (x + xo >= 0) & (x + xo < X):
+                    curr = board[y][x]
                     new = board[y+yo][x+xo]
-                    if new in valid[(xo, yo)]:
+                    if ((xo,yo), new) in valid[curr]:
                         distance[y+yo][x+xo] = distance[y][x] + 1
                         que.append((x+xo, y+yo))
                         seen.add((x+xo, y+yo))
@@ -63,6 +115,34 @@ def p1():
     data = parse()
     maxdistance, _ = traverse(data)
     return maxdistance
+
+
+def is_inside(board, cell):
+    X = len(board[0])
+    x,y = cell
+    bar_count = 0
+    c_up = 0
+    c_down = 0
+    for xo in range(1,X-x):
+        if board[y][x+xo] == "|":
+            bar_count += 1
+        if board[y][x+xo] in ["L", "J"]:
+            c_up += 1
+        if board[y][x+xo] in ["F", "7"]:
+            c_down += 1
+
+    if bar_count > 0:
+        if bar_count % 2 == 0:
+            return False
+        else:
+            return True
+    elif (c_up > 0) | (c_down > 0):
+        if (c_up % 2 == 0) & (c_down % 2 == 0):
+            return False
+        else:
+            return True
+    else:
+        return True
 
 
 def floodfill(board):
@@ -128,14 +208,16 @@ def p2():
     Y = len(data)
     for x in range(X):
         for y in range(Y):
-            if pipes[y][x] == ".":
+            if not str(pipes[y][x]).isdigit():
                 data[y][x] = "."
-    print(data)
+    # print(pipes)
+    # print(data)
 
     floods = floodfill(pipes)
     score = 0
     for flood in floods:
-        score += len(flood)
+        if is_inside(data, flood[0]):
+            score += len(flood)
     return score
 
 
