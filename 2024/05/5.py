@@ -1,5 +1,4 @@
 from collections import defaultdict
-from itertools import permutations
 
 def parse():
     with open("input.txt", "r") as f:
@@ -43,6 +42,15 @@ def part1():
 
     return answer
 
+
+def bubble_sort(arr, keys):
+    n = len(arr)
+    for i in range(n):
+        for j in range(i, n-1):
+            if arr[j] in keys[arr[j+1]]:
+                arr[j+1], arr[j] = arr[j], arr[j+1]
+    return arr
+
 def part2():
     keys, lines = parse()
 
@@ -51,14 +59,13 @@ def part2():
         ok = ordered_ok(keys, line)
 
         if not ok:
-            print(f"{idx/len(lines):.2%}")
-            perms = permutations(line)
-            for perm in perms:
-                ok = ordered_ok(keys, perm)
+            while not ok:
+                line = bubble_sort(line, keys)
+                ok = ordered_ok(keys, line)
                 if ok:
-                    answer += perm[len(perm) // 2]
+                    answer += line[len(line)//2]
                     break
-
+            
 
     return answer
 
