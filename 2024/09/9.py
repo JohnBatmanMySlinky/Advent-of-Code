@@ -62,20 +62,25 @@ def part2():
     for each in memory:
         if each != ".":
             addresses[int(each)] += 1
-    print(addresses)
 
     new_memory = deepcopy(memory)
-    while True:
+    while addresses:
+        current = max(addresses.keys())
+        print(current, addresses[current])
         for i in range(len(new_memory)):
             if new_memory[i] == ".":
-                spaces = count_spaces(new_memory, i)
-                print(spaces)
-                for possible in reversed(range(max(addresses.keys())+1)):
-                    print(possible, addresses[possible])
-                    if addresses[possible] <= spaces:
-                        print(possible)
-                        assert False
-    return addresses
+                free = count_spaces(new_memory, i)
+                if addresses[current] <= free:
+                    print(f"\t{free}")
+                    new_memory = [x for x in new_memory if x != str(current)]
+                    for ii in range(addresses[current]):
+                        new_memory[i+ii] = str(current)
+                    
+                
+                break
+        addresses.pop(current)
+        print(new_memory)
+        input()
 
 print(f"part 1: {part1()}")
 print(f"part 2: {part2()}")
