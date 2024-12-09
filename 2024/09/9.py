@@ -1,14 +1,5 @@
 from copy import deepcopy
 
-def done(memory):
-    switches = 0
-    for i in range(len(memory)-1):
-        if (memory[i] != ".") & (memory[i+1] == "."):
-            switches += 1
-        if (memory[i] == ".") & (memory[i+1] != "."):
-            switches += 1
-    return switches == 1
-
 def part1():
     with open("input.txt", "r") as f:
         data = [x.strip() for x in f.readlines()][0]
@@ -37,7 +28,6 @@ def part1():
             new_memory[i] = maybe
         else:
             continue
-
 
     return sum([x*int(y) for x,y in enumerate(new_memory)])
 
