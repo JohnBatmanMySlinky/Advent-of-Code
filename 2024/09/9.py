@@ -1,4 +1,5 @@
 from copy import deepcopy
+from collections import defaultdict
 
 def part1():
     with open("input.txt", "r") as f:
@@ -31,4 +32,50 @@ def part1():
 
     return sum([x*int(y) for x,y in enumerate(new_memory)])
 
+def count_spaces(board, start):
+    spaces = 0
+    i = 0
+    while i + start < len(board):
+        if board[i+start] == ".":
+            spaces += 1
+        else:
+            return spaces
+        i += 1
+    return spaces
+
+def part2():
+    with open("input.txt", "r") as f:
+        data = [x.strip() for x in f.readlines()][0]
+
+    memory = []
+    i = 0
+    for flag, each in enumerate(data):
+        each = int(each)
+        if flag % 2 == 0:
+
+            memory += [str(i) for _ in range(each)]
+            i += 1
+        else:
+            memory += ["." for _ in range(each)]
+
+    addresses = defaultdict(int)
+    for each in memory:
+        if each != ".":
+            addresses[int(each)] += 1
+    print(addresses)
+
+    new_memory = deepcopy(memory)
+    while True:
+        for i in range(len(new_memory)):
+            if new_memory[i] == ".":
+                spaces = count_spaces(new_memory, i)
+                print(spaces)
+                for possible in reversed(range(max(addresses.keys())+1)):
+                    print(possible, addresses[possible])
+                    if addresses[possible] <= spaces:
+                        print(possible)
+                        assert False
+    return addresses
+
 print(f"part 1: {part1()}")
+print(f"part 2: {part2()}")
