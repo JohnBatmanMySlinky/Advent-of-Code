@@ -73,16 +73,18 @@ def part2():
     haha = max(addresses.keys())
     while addresses:
         current = max(addresses.keys())
-        if current % 100 == 0:
+        if current % 1 == 0:
             print(f"{current / haha:.2%}")
-        shadow_addresses = defaultdict(int)
         # print(current, addresses[current])
+        # it is this loop that is killing me. 
+        # i should scan thru once get a dict of positions and loop thru that and update that as I go 
+        # instead of naviely going thru the whole thing...
         for i in range(len(new_memory)):
             if new_memory[i] == ".":
                 free = count_spaces(new_memory, i)
                 # print(free)
                 if (addresses[current] <= free) & (i < start_pos[current]):
-                    # print(f"\tsomething is happening")
+                    # print(f"\tsomething is happening - moving chunk of size {addresses[current]}")
                     new_memory = [x if x != str(current) else "." for x in new_memory]
                     for ii in range(addresses[current]):
                         new_memory[i+ii] = str(current)
@@ -94,6 +96,10 @@ def part2():
 
     return sum([i*int(x) for i,x in enumerate(new_memory) if x != "."])
         
+uno = part1()
+dos = part2()
+print(f"part 1: {uno}")
+print(f"part 2: {dos}")
 
-print(f"part 1: {part1()}")
-print(f"part 2: {part2()}")
+with open("9.answer", "w") as f:
+    f.write(f"part 1: {uno}\npart 2: {dos}")
