@@ -63,24 +63,37 @@ def part2():
         if each != ".":
             addresses[int(each)] += 1
 
+    start_pos = dict()
+    for i, each in enumerate(memory):
+        if each != ".":
+            if int(each) not in start_pos.keys():
+                start_pos[int(each)] = i
+
     new_memory = deepcopy(memory)
+    haha = max(addresses.keys())
     while addresses:
         current = max(addresses.keys())
-        print(current, addresses[current])
+        if current % 100 == 0:
+            print(f"{current / haha:.2%}")
+        shadow_addresses = defaultdict(int)
+        # print(current, addresses[current])
         for i in range(len(new_memory)):
             if new_memory[i] == ".":
                 free = count_spaces(new_memory, i)
-                if addresses[current] <= free:
-                    print(f"\t{free}")
-                    new_memory = [x for x in new_memory if x != str(current)]
+                # print(free)
+                if (addresses[current] <= free) & (i < start_pos[current]):
+                    # print(f"\tsomething is happening")
+                    new_memory = [x if x != str(current) else "." for x in new_memory]
                     for ii in range(addresses[current]):
                         new_memory[i+ii] = str(current)
-                    
-                
-                break
+                    break
+        
         addresses.pop(current)
-        print(new_memory)
-        input()
+        # print(new_memory)
+        # input()
+
+    return sum([i*int(x) for i,x in enumerate(new_memory) if x != "."])
+        
 
 print(f"part 1: {part1()}")
 print(f"part 2: {part2()}")
