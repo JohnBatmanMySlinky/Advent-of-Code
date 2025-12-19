@@ -43,7 +43,7 @@ def p2(data):
             turn_full = turn // 100
             turn_remainder = turn - turn_full * 100
 
-        for turn in range(turn_full):
+        for each in range(turn_full):
             number, counter = rotate(number, orig_number, sign, 100, counter)
         
         number, counter = rotate(number, orig_number, sign, turn_remainder, counter)
